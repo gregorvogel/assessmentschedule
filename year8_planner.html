@@ -553,12 +553,27 @@
         }
 
         /* ── Print ── */
+        @page { size: A4 portrait; margin: 1.5cm; }
+
         @media print {
             header, .selector-panel, .term-tabs, .summary-bar, .fab { display: none !important; }
             .print-header { display: none !important; }
             body { background: white; }
             .term-section { break-inside: avoid; box-shadow: none; border: 1px solid var(--gray-200); margin-bottom: 16px; }
-            .container { padding: 0; }
+
+            /* Override mobile layout so print always uses desktop-style regardless of viewport */
+            .container { padding: 0 !important; }
+            .term-header {
+                flex-direction: row !important;
+                align-items: center !important;
+                padding: 14px 20px !important;
+            }
+            .term-header-center { text-align: center !important; padding: 0 12px !important; }
+            .term-header-right  { text-align: right !important; }
+            .term-header-left h2 { font-size: 17px !important; }
+            .cards-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important; }
+            .term-body { padding: 14px 18px 18px !important; }
+
             * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
     </style>
