@@ -172,12 +172,25 @@
             color: white;
             padding: 18px 24px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
         }
+        .term-header-left  { flex: 1; }
         .term-header-left h2  { font-size: 20px; font-weight: 700; }
         .term-header-left span { font-size: 13px; opacity: 0.75; }
-        .term-header-right { text-align: right; font-size: 12px; }
+        .term-header-center {
+            flex: 1;
+            text-align: center;
+            padding: 0 12px;
+        }
+        .th-profile-name {
+            font-size: 16px;
+            font-weight: 700;
+            opacity: 0.95;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .term-header-right { flex: 1; text-align: right; font-size: 12px; }
         .term-header-right .t-weeks { font-weight: 700; font-size: 13px; }
         .term-header-right .t-dates { opacity: 0.8; margin-top: 2px; }
         .term-count-badge {
@@ -472,6 +485,7 @@
             /* Term header */
             .term-header { padding: 14px 16px; flex-direction: column; align-items: flex-start; gap: 4px; }
             .term-header-left h2  { font-size: 17px; }
+            .term-header-center { text-align: left; padding: 0; }
             .term-header-right { text-align: left; }
 
             /* Term body */
@@ -553,10 +567,6 @@
 </head>
 <body>
 
-<header>
-    <h1>Year 8 Assessment Planner 2026</h1>
-    <p>Select your elective subjects to build a personalised schedule — core subjects always appear.</p>
-</header>
 
 <!-- Profile picker modal -->
 <div class="modal-overlay hidden" id="profileOverlay">
@@ -1120,11 +1130,15 @@ function renderSchedule() {
         const section = document.createElement('div');
         section.className = 'term-section';
         section.id = 'term-' + term.id;
+        const profileName = document.getElementById('studentName').value.trim();
         section.innerHTML = `
             <div class="term-header" style="background:${term.color}">
                 <div class="term-header-left">
-                    <h2>${term.label}, ${term.year}</h2>
+                    <h2>Year 8 ${term.label}, ${term.year}</h2>
                     <span>${term.dates}</span>
+                </div>
+                <div class="term-header-center">
+                    ${profileName ? `<div class="th-profile-name">${esc(profileName)}</div>` : ''}
                 </div>
                 <div class="term-header-right">
                     <div class="t-weeks">${term.weeks}</div>
