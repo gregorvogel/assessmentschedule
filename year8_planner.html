@@ -560,15 +560,20 @@
             .print-header { display: none !important; }
             body { background: white; }
 
-            /* Hard rule: exactly one term per page */
+            /* Hard rule: one term per page — header always at top */
+            .schedule    { gap: 0 !important; }
             .term-section {
                 break-before: page;
-                break-inside: avoid;
+                overflow: visible !important;   /* overflow:hidden clips print content — must clear */
+                border-radius: 0 !important;
                 box-shadow: none;
                 border: 1px solid var(--gray-200);
-                margin-bottom: 0;
+                margin: 0 !important;
+                padding: 0 !important;
             }
             .term-section:first-child { break-before: auto; }
+            /* Prevent the header box being stranded alone at the bottom of a page */
+            .term-header { break-after: avoid; }
 
             /* Override mobile layout so print always uses desktop-style regardless of viewport */
             .container { padding: 0 !important; }
