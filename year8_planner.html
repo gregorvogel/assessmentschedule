@@ -559,7 +559,16 @@
             header, .selector-panel, .term-tabs, .summary-bar, .fab { display: none !important; }
             .print-header { display: none !important; }
             body { background: white; }
-            .term-section { break-inside: avoid; box-shadow: none; border: 1px solid var(--gray-200); margin-bottom: 16px; }
+
+            /* Hard rule: exactly one term per page */
+            .term-section {
+                break-before: page;
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--gray-200);
+                margin-bottom: 0;
+            }
+            .term-section:first-child { break-before: auto; }
 
             /* Override mobile layout so print always uses desktop-style regardless of viewport */
             .container { padding: 0 !important; }
