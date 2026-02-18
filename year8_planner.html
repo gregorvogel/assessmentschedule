@@ -584,8 +584,8 @@
 <!-- Profile picker modal -->
 <div class="modal-overlay hidden" id="profileOverlay">
     <div class="modal-box">
-        <h2>Select Your Profile</h2>
-        <p class="modal-sub">Choose your profile to load your saved elective selections, or create a new one.</p>
+        <h2>Your Profile</h2>
+        <p class="modal-sub">Manage your saved elective selections, or create a new profile.</p>
         <div class="modal-cap" id="modalCap"></div>
         <div class="profile-grid" id="profileGrid"></div>
         <div class="new-profile-form" id="newProfileForm">
@@ -971,47 +971,45 @@ function closePicker() {
     document.getElementById('profileOverlay').classList.add('hidden');
 }
 function renderProfileGrid() {
-    const profiles = getAllProfiles();
-    const grid     = document.getElementById('profileGrid');
-    const cap      = document.getElementById('modalCap');
+    const profiles   = getAllProfiles();
+    const activeId   = getActiveProfileId();
+    const ownProfile = profiles.find(p => p.id === activeId) || null;
+    const freeSlots  = MAX_PROFILES - profiles.length;
+    const grid       = document.getElementById('profileGrid');
+    const cap        = document.getElementById('modalCap');
 
-    cap.innerHTML = `<strong>${profiles.length}</strong> of <strong>${MAX_PROFILES}</strong> profiles used`;
+    cap.innerHTML = `<strong>${freeSlots}</strong> of <strong>${MAX_PROFILES}</strong> profile slots available`;
     grid.innerHTML = '';
 
-    profiles.forEach(p => {
+    if (ownProfile) {
+        // Only show the current user's own profile — other profiles stay hidden
         const card = document.createElement('div');
         card.className = 'profile-card';
-        const initial     = (p.name || '?')[0].toUpperCase();
-        const electCount  = (p.sel || []).length;
-        const isActive    = p.id === getActiveProfileId();
+        const initial    = (ownProfile.name || '?')[0].toUpperCase();
+        const electCount = (ownProfile.sel || []).length;
         card.innerHTML = `
             <button class="profile-del" title="Delete profile">✕</button>
-            <div class="profile-avatar" style="${isActive ? 'box-shadow:0 0 0 3px #667eea,0 0 0 5px white' : ''}">${esc(initial)}</div>
-            <div class="profile-name">${esc(p.name)}</div>
-            <div class="profile-meta">${electCount} elective${electCount !== 1 ? 's' : ''}${isActive ? ' · active' : ''}</div>
+            <div class="profile-avatar" style="box-shadow:0 0 0 3px #667eea,0 0 0 5px white">${esc(initial)}</div>
+            <div class="profile-name">${esc(ownProfile.name)}</div>
+            <div class="profile-meta">${electCount} elective${electCount !== 1 ? 's' : ''} · active</div>
         `;
         card.addEventListener('click', e => {
             if (e.target.closest('.profile-del')) return;
-            sessionStorage.setItem(ACTIVE_ID_KEY, p.id);
-            loadProfile();
-            renderChips();
-            renderSchedule();
             closePicker();
         });
         card.querySelector('.profile-del').addEventListener('click', e => {
             e.stopPropagation();
-            if (!confirm(`Delete "${p.name}"?`)) return;
-            deleteProfile(p.id);
-            if (getActiveProfileId() === p.id) sessionStorage.removeItem(ACTIVE_ID_KEY);
+            if (!confirm(`Delete your profile "${ownProfile.name}"?`)) return;
+            deleteProfile(ownProfile.id);
+            sessionStorage.removeItem(ACTIVE_ID_KEY);
+            selected = new Set();
+            renderChips();
+            renderSchedule();
             renderProfileGrid();
-            // If we just deleted the active profile, re-open picker cleanly
-            if (!getActiveProfile()) { selected = new Set(); renderChips(); renderSchedule(); }
         });
         grid.appendChild(card);
-    });
-
-    // New profile card (shown if under the limit)
-    if (profiles.length < MAX_PROFILES) {
+    } else if (freeSlots > 0) {
+        // No active profile — show the "New Profile" add card
         const addCard = document.createElement('div');
         addCard.className = 'profile-card add-card';
         addCard.innerHTML = `<div class="add-icon">+</div><div class="add-label">New Profile</div>`;
@@ -1021,6 +1019,9 @@ function renderProfileGrid() {
             document.getElementById('newProfileName').focus();
         });
         grid.appendChild(addCard);
+    } else {
+        // All slots taken and user has no active profile
+        grid.innerHTML = '<p style="font-size:13px;color:var(--gray-500);text-align:center;padding:16px 0;">All profile slots are currently in use. Please try again later.</p>';
     }
 }
 
