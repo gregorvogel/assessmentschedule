@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year 8 Assessment Planner 2026</title>
+    <style>
+        :root {
+            --blue:         #2563eb;
+            --blue-light:   #eff6ff;
+            --blue-border:  #bfdbfe;
+            --green:        #16a34a;
+            --green-light:  #f0fdf4;
+            --green-border: #bbf7d0;
+            --red:          #dc2626;
+            --red-light:    #fef2f2;
+            --orange:       #f97316;
+            --gray-50:  #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-900: #0f172a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-900);
+            min-height: 100vh;
+        }
+
+        /* ── Header ── */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 28px 32px;
+        }
+        header h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+        header p  { font-size: 14px; opacity: 0.65; }
+
+        /* ── Container ── */
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px 16px 80px; }
+
+        /* ── Selector panel ── */
+        .selector-panel {
+            background: white;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+        }
+        .selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .selector-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .selector-actions { display: flex; gap: 8px; }
+        .btn-sm {
+            background: none;
+            border: 1.5px solid var(--gray-200);
+            color: var(--gray-600);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .btn-sm:hover { background: var(--gray-100); border-color: var(--gray-300); color: var(--gray-900); }
+
+        /* ── Elective chips ── */
+        .electives-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .elective-chip {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 14px;
+            border-radius: 100px;
+            border: 2px solid var(--gray-200);
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+        .elective-chip:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
+        .elective-chip.selected { border-color: var(--green); background: var(--green-light); color: var(--green); }
+        .chip-dot {
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 9px; font-weight: 700;
+            flex-shrink: 0;
+            transition: all 0.15s;
+        }
+        .elective-chip.selected .chip-dot { background: var(--green); border-color: var(--green); color: white; }
+
+        /* ── Summary bar ── */
+        .summary-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 13px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .sum-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-600); }
+        .sum-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+        .sum-dot.core     { background: var(--blue); }
+        .sum-dot.elective { background: var(--green); }
+        .sum-count {
+            margin-left: auto;
+            font-size: 13px;
+            color: var(--gray-600);
+            background: var(--gray-100);
+            padding: 5px 14px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .sum-count strong { color: var(--gray-900); }
+
+        /* ── Term tabs ── */
+        .term-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .term-tab {
+            padding: 9px 20px;
+            border-radius: 10px;
+            border: 2px solid var(--gray-200);
+            background: white;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .term-tab:hover { border-color: #667eea; color: #667eea; }
+        .term-tab.active { color: white; border-color: transparent; }
+
+        /* ── Schedule ── */
+        .schedule { display: flex; flex-direction: column; gap: 20px; }
+
+        /* ── Term section ── */
+        .term-section { border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+        .term-header {
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .term-header-left h2  { font-size: 20px; font-weight: 700; }
+        .term-header-left span { font-size: 13px; opacity: 0.75; }
+        .term-header-right { text-align: right; font-size: 12px; }
+        .term-header-right .t-weeks { font-weight: 700; font-size: 13px; }
+        .term-header-right .t-dates { opacity: 0.8; margin-top: 2px; }
+        .term-count-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 6px;
+            display: inline-block;
+        }
+
+        .term-body { background: white; padding: 18px 24px 22px; }
+
+        /* ── Week ── */
+        .week-section { margin-bottom: 18px; }
+        .week-section:last-child { margin-bottom: 0; }
+        .week-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .week-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-700);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            white-space: nowrap;
+        }
+        .week-dates {
+            font-size: 11px;
+            color: var(--gray-400);
+            white-space: nowrap;
+        }
+        .week-line { flex: 1; height: 1px; background: var(--gray-200); }
+
+        /* ── Exam week banner ── */
+        .exam-banner {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 9px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+        }
+
+        /* ── Cards grid ── */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+            gap: 8px;
+        }
+
+        /* ── Assessment card ── */
+        .assessment-card {
+            border-radius: 8px;
+            padding: 10px 12px;
+            border-left: 3px solid transparent;
+        }
+        .assessment-card.core        { background: var(--blue-light);  border-left-color: var(--blue); }
+        .assessment-card.elective    { background: var(--green-light); border-left-color: var(--green); }
+        .assessment-card.exam.core   { background: var(--red-light);   border-left-color: var(--red); }
+        .assessment-card.exam.elective { background: #fff7ed;          border-left-color: var(--orange); }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 3px;
+        }
+        .card-subject { font-size: 12px; font-weight: 700; color: var(--gray-900); line-height: 1.2; }
+        .card-badge {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        .card-badge.core     { background: #dbeafe; color: #1d4ed8; }
+        .card-badge.elective { background: #dcfce7; color: #15803d; }
+        .card-type { font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--gray-600); margin-bottom: 4px; letter-spacing: 0.3px; }
+        .card-task { font-size: 11px; color: #444; line-height: 1.4; }
+
+        /* ── Empty state ── */
+        .empty-term {
+            padding: 18px 0 8px;
+            text-align: center;
+            color: var(--gray-400);
+            font-size: 13px;
+        }
+
+        /* ── Print FAB ── */
+        .fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 13px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(102,126,234,0.45);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+            font-family: inherit;
+        }
+        .fab:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(102,126,234,0.55); }
+
+        /* ── Profile picker modal ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+        .modal-overlay.hidden { display: none; }
+        .modal-box {
+            background: white;
+            border-radius: 18px;
+            padding: 28px 28px 24px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+        }
+        .modal-box h2  { font-size: 20px; font-weight: 700; color: var(--gray-900); margin-bottom: 4px; }
+        .modal-sub     { font-size: 13px; color: var(--gray-600); margin-bottom: 18px; line-height: 1.5; }
+        .modal-cap     { font-size: 11px; color: var(--gray-400); text-align: right; margin-bottom: 12px; }
+        .modal-cap strong { color: var(--gray-700); }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        .profile-card {
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 16px 10px 13px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.15s;
+            position: relative;
+            background: white;
+            user-select: none;
+        }
+        .profile-card:hover { border-color: #667eea; background: #f5f3ff; transform: translateY(-1px); }
+        .profile-avatar {
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 19px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 10px;
+        }
+        .profile-name { font-size: 12px; font-weight: 700; color: var(--gray-900); word-break: break-word; line-height: 1.3; margin-bottom: 3px; }
+        .profile-meta { font-size: 10px; color: var(--gray-400); }
+        .profile-del {
+            position: absolute; top: 6px; right: 6px;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--gray-200); color: var(--gray-500);
+            border: none; cursor: pointer; font-size: 10px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.15s;
+            font-family: inherit;
+        }
+        .profile-card:hover .profile-del { opacity: 1; }
+        .profile-del:hover { background: var(--red-light); color: var(--red); }
+
+        .profile-card.add-card { border-style: dashed; color: var(--gray-500); }
+        .profile-card.add-card:hover { border-color: var(--green); background: var(--green-light); color: var(--green); transform: translateY(-1px); }
+        .add-icon { width: 46px; height: 46px; border-radius: 50%; border: 2px dashed currentColor; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 10px; }
+        .add-label { font-size: 12px; font-weight: 700; }
+
+        .new-profile-form { margin-top: 18px; display: none; border-top: 1px solid var(--gray-200); padding-top: 18px; }
+        .new-profile-form.open { display: block; }
+        .new-profile-form label { font-size: 11px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.7px; display: block; margin-bottom: 8px; }
+        .new-profile-form input {
+            width: 100%; padding: 10px 14px;
+            border: 1.5px solid var(--gray-200); border-radius: 10px;
+            font-size: 16px; font-family: inherit; color: var(--gray-900);
+            outline: none; margin-bottom: 10px; transition: border-color 0.15s;
+        }
+        .new-profile-form input:focus { border-color: var(--blue); }
+        .new-profile-btns { display: flex; gap: 8px; }
+        .btn-primary {
+            flex: 1; background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; border: none; border-radius: 8px;
+            padding: 10px 16px; font-size: 14px; font-weight: 600;
+            cursor: pointer; font-family: inherit; transition: opacity 0.15s;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-cancel {
+            background: var(--gray-100); color: var(--gray-600);
+            border: none; border-radius: 8px;
+            padding: 10px 16px; font-size: 14px; font-weight: 600;
+            cursor: pointer; font-family: inherit;
+        }
+        .btn-cancel:hover { background: var(--gray-200); }
+
+        /* ── Switch profile button ── */
+        .btn-switch {
+            background: none; border: 1.5px solid var(--gray-200);
+            color: var(--gray-500); font-size: 11px; font-weight: 600;
+            padding: 5px 11px; border-radius: 8px; cursor: pointer;
+            font-family: inherit; transition: all 0.15s; white-space: nowrap; flex-shrink: 0;
+        }
+        .btn-switch:hover { background: var(--gray-100); border-color: var(--gray-300); color: var(--gray-900); }
+
+        /* ── Responsive — tablet ── */
+        @media (max-width: 900px) {
+            .cards-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+        }
+
+        /* ── Responsive — mobile ── */
+        @media (max-width: 640px) {
+
+            /* Header */
+            header { padding: 16px; }
+            header h1 { font-size: 18px; }
+            header p  { font-size: 12px; }
+
+            /* Container — extra bottom padding clears the FAB */
+            .container { padding: 12px 12px 100px; }
+
+            /* Selector panel */
+            .selector-panel { padding: 14px; border-radius: 10px; margin-bottom: 12px; }
+
+            /* Name row — stack vertically, full-width input */
+            .name-row { flex-direction: column; align-items: stretch; gap: 6px; }
+            /* font-size ≥ 16px prevents iOS auto-zoom on focus */
+            .name-input { max-width: 100%; font-size: 16px; padding: 11px 12px; }
+
+            /* Selector header */
+            .selector-header { flex-direction: column; align-items: stretch; gap: 8px; }
+            .selector-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+            .btn-sm { padding: 10px 14px; font-size: 13px; text-align: center; }
+
+            /* Chips — larger tap targets */
+            .elective-chip { padding: 10px 14px; font-size: 14px; min-height: 44px; }
+            .chip-dot { width: 18px; height: 18px; font-size: 10px; }
+
+            /* Summary bar — vertical stack */
+            .summary-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 12px 14px;
+                margin-bottom: 12px;
+            }
+            .sum-count { margin-left: 0; text-align: center; padding: 8px 14px; }
+
+            /* Term tabs — horizontal scroll, no wrap */
+            .term-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding-bottom: 4px;
+                margin-bottom: 12px;
+            }
+            .term-tabs::-webkit-scrollbar { display: none; }
+            .term-tab { flex-shrink: 0; padding: 10px 18px; font-size: 13px; min-height: 44px; }
+
+            /* Schedule gap */
+            .schedule { gap: 12px; }
+
+            /* Term header */
+            .term-header { padding: 14px 16px; flex-direction: column; align-items: flex-start; gap: 4px; }
+            .term-header-left h2  { font-size: 17px; }
+            .term-header-right { text-align: left; }
+
+            /* Term body */
+            .term-body { padding: 14px 12px 16px; }
+
+            /* Week */
+            .week-section { margin-bottom: 14px; }
+
+            /* Cards — single column */
+            .cards-grid { grid-template-columns: 1fr; }
+
+            /* Assessment card — slightly larger text for readability */
+            .assessment-card { padding: 11px 12px; }
+            .card-subject { font-size: 13px; }
+            .card-type    { font-size: 11px; }
+            .card-task    { font-size: 12px; }
+
+            /* FAB — full width at bottom */
+            .fab {
+                left: 12px;
+                right: 12px;
+                bottom: 16px;
+                border-radius: 12px;
+                justify-content: center;
+                padding: 15px 24px;
+                font-size: 15px;
+            }
+        }
+
+        /* ── Name input ── */
+        .name-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .name-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+        }
+        .name-input {
+            flex: 1;
+            max-width: 280px;
+            padding: 7px 12px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--gray-900);
+            outline: none;
+            transition: border-color 0.15s;
+        }
+        .name-input:focus { border-color: var(--blue); }
+        .name-input::placeholder { color: var(--gray-400); }
+
+        /* ── Print-only name header ── */
+        .print-header {
+            display: none;
+        }
+
+        /* ── Print ── */
+        @media print {
+            header, .selector-panel, .term-tabs, .summary-bar, .fab { display: none !important; }
+            .print-header { display: block; padding: 0 0 14px; margin-bottom: 16px; border-bottom: 2px solid var(--gray-200); }
+            .print-header h1 { font-size: 18px; font-weight: 700; color: var(--gray-900); }
+            .print-header p  { font-size: 13px; color: var(--gray-600); margin-top: 3px; }
+            body { background: white; }
+            .term-section { break-inside: avoid; box-shadow: none; border: 1px solid var(--gray-200); margin-bottom: 16px; }
+            .container { padding: 0; }
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Year 8 Assessment Planner 2026</h1>
+    <p>Select your elective subjects to build a personalised schedule — core subjects always appear.</p>
+</header>
+
+<!-- Profile picker modal -->
+<div class="modal-overlay hidden" id="profileOverlay">
+    <div class="modal-box">
+        <h2>Select Your Profile</h2>
+        <p class="modal-sub">Choose your profile to load your saved elective selections, or create a new one.</p>
+        <div class="modal-cap" id="modalCap"></div>
+        <div class="profile-grid" id="profileGrid"></div>
+        <div class="new-profile-form" id="newProfileForm">
+            <label for="newProfileName">Your Name</label>
+            <input type="text" id="newProfileName" placeholder="Enter your name" maxlength="40" autocomplete="off">
+            <div class="new-profile-btns">
+                <button class="btn-primary" id="btnCreateProfile">Create Profile</button>
+                <button class="btn-cancel"  id="btnCancelCreate">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- Print-only header -->
+    <div class="print-header">
+        <h1>Year 8 Assessment Schedule 2026</h1>
+        <p id="printName"></p>
+    </div>
+
+    <!-- Elective selector -->
+    <div class="selector-panel">
+        <div class="name-row">
+            <span class="name-label">Student Name</span>
+            <input class="name-input" id="studentName" type="text" placeholder="Your name" maxlength="40" autocomplete="off">
+            <button class="btn-switch" id="btnSwitch">⇄ Switch Profile</button>
+        </div>
+        <div class="selector-header">
+            <div class="selector-title">Select Your Electives</div>
+            <div class="selector-actions">
+                <button class="btn-sm" id="btnAll">Select All</button>
+                <button class="btn-sm" id="btnNone">Clear All</button>
+            </div>
+        </div>
+        <div class="electives-grid" id="electivesGrid"></div>
+    </div>
+
+    <!-- Summary bar -->
+    <div class="summary-bar">
+        <div class="sum-item"><div class="sum-dot core"></div>Core subjects: <strong>always shown</strong></div>
+        <div class="sum-item"><div class="sum-dot elective"></div>Electives selected: <strong id="selCount">0</strong> of <strong id="totCount">0</strong></div>
+        <div class="sum-count">Total assessments: <strong id="totalCount">0</strong></div>
+    </div>
+
+    <!-- Term tabs -->
+    <div class="term-tabs" id="termTabs"></div>
+
+    <!-- Schedule -->
+    <div class="schedule" id="schedule"></div>
+
+</div>
+
+<button class="fab" onclick="window.print()">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+        <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z"/>
+    </svg>
+    Print Schedule
+</button>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────────────────────────
+const TERMS = [
+    {
+        id: 1, label: "Term 1", year: 2026,
+        weeks: "Weeks 5A – 9A", dates: "23 Feb – 27 Mar 2026",
+        color: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        weekData: [
+            {
+                label: "Week 5A", dates: "23–27 Feb", examWeek: false,
+                assessments: [
+                    { subject: "Hands-On History", category: "elective", type: "Practical Task",    task: "Group presentations of Historical Games" },
+                    { subject: "Mathematics",       category: "core",     type: "Class Test",        task: "Written Task" }
+                ]
+            },
+            {
+                label: "Week 6B", dates: "2–6 Mar", examWeek: false,
+                assessments: [
+                    { subject: "Science", category: "core", type: "Class Test", task: "Topic Test" }
+                ]
+            },
+            {
+                label: "Week 7A", dates: "9–13 Mar", examWeek: false,
+                assessments: [
+                    { subject: "French", category: "elective", type: "Class Test",      task: "Reading and Responding" },
+                    { subject: "PDHPE",  category: "core",     type: "Oral / Research", task: "Group Oral Presentation & Research Task" }
+                ]
+            },
+            {
+                label: "Week 8B", dates: "16–20 Mar", examWeek: false,
+                assessments: [
+                    { subject: "Business",              category: "elective", type: "Report",            task: "Brains for Business – Promotional Campaign" },
+                    { subject: "Chinese",               category: "elective", type: "Class Test",        task: "Understanding Texts (listening & reading)" },
+                    { subject: "Phil & Religious Studies", category: "core", type: "Oral Presentation", task: "Discussion on 'moral consideration'" },
+                    { subject: "Geography",             category: "core",     type: "Class Test",        task: "Landforms and Landscapes" }
+                ]
+            },
+            {
+                label: "Week 9A", dates: "23–27 Mar", examWeek: false,
+                assessments: [
+                    { subject: "Drama",       category: "elective", type: "Submission",       task: "Silent Film Submission" },
+                    { subject: "English",     category: "core",     type: "Extended Response", task: "Extended Creative Writing" },
+                    { subject: "Timber",      category: "elective", type: "Practical Task",   task: "Cheese board project" },
+                    { subject: "Game Design", category: "elective", type: "Research Task",    task: "History of Gaming project" },
+                    { subject: "Philosophy",  category: "core",     type: "Class Test",        task: "The Ancients" },
+                    { subject: "Filmmaking",  category: "elective", type: "Practical Task",   task: "Music TV Commercial" }
+                ]
+            }
+        ]
+    },
+    {
+        id: 2, label: "Term 2", year: 2026,
+        weeks: "Weeks 12B – 20B", dates: "30 Apr – 24 Jun 2026",
+        color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+        weekData: [
+            {
+                label: "Week 12B", dates: "27 Apr – 1 May", examWeek: false,
+                assessments: [
+                    { subject: "Food & Cooking", category: "elective", type: "Practical + Test", task: "Practical cooking task 1 + Skills test" }
+                ]
+            },
+            {
+                label: "Week 14B", dates: "11–15 May", examWeek: false,
+                assessments: [
+                    { subject: "Product Design", category: "elective", type: "Project",    task: "Pendant project" },
+                    { subject: "Technology",     category: "core",     type: "Portfolio",  task: "Project 1" }
+                ]
+            },
+            {
+                label: "Week 15A", dates: "18–22 May", examWeek: false,
+                assessments: [
+                    { subject: "Visual Arts",  category: "core",     type: "Practical Task", task: "Sculpture Toolbox Tasks" },
+                    { subject: "French",       category: "elective", type: "Class Test",     task: "Listening and Writing in French" },
+                    { subject: "Latin",        category: "elective", type: "Submission",     task: "Grammar Booklet (Ch 6–11)" },
+                    { subject: "Mathematics",  category: "core",     type: "Class Test",     task: "Written Task" },
+                    { subject: "Visual Arts",  category: "core",     type: "Exam Style",     task: "Written Toolbox Task" }
+                ]
+            },
+            {
+                label: "Week 16B", dates: "25–29 May", examWeek: false,
+                assessments: [
+                    { subject: "Science", category: "core", type: "Exam Style",            task: "Half Yearly Examination" },
+                    { subject: "Music",   category: "core", type: "Performance / Practical", task: "Assessment Evidence Submission #1" }
+                ]
+            },
+            {
+                label: "Week 17A", dates: "1–5 Jun", examWeek: false,
+                assessments: [
+                    { subject: "Philosophy", category: "core",     type: "Viva Voce",      task: "Discussion on epistemology" },
+                    { subject: "Geography",  category: "core",     type: "Research Task",  task: "Multimedia project on Liveability" },
+                    { subject: "Filmmaking", category: "elective", type: "Practical Task", task: "Cinematography Checklist" }
+                ]
+            },
+            {
+                label: "Week 18B", dates: "8–12 Jun", examWeek: false,
+                assessments: [
+                    { subject: "Business",                 category: "elective", type: "Report",        task: "Mind Your Own Business Project" },
+                    { subject: "Phil & Religious Studies", category: "core",     type: "Exam Style",    task: "Critical thinking skills test" },
+                    { subject: "PDHPE",                    category: "core",     type: "Practical Task", task: "Physical Literacy Assessment 1" }
+                ]
+            },
+            {
+                label: "Week 19A", dates: "15–19 Jun", examWeek: false,
+                assessments: [
+                    { subject: "Chinese", category: "elective", type: "Class Test",  task: "Written response to a letter" },
+                    { subject: "Drama",   category: "elective", type: "Performance", task: "Class Performance of Frank Sparrow" }
+                ]
+            },
+            {
+                label: "Week 20B", dates: "22–26 Jun", examWeek: false,
+                assessments: [
+                    { subject: "Hands-On History", category: "elective", type: "Submission", task: "Pirates Museum Exhibit" },
+                    { subject: "Game Design",       category: "elective", type: "Project",    task: "Scratch project" }
+                ]
+            }
+        ]
+    },
+    {
+        id: 3, label: "Term 3", year: 2026,
+        weeks: "Weeks 2B – 9A", dates: "27 Jul – 18 Sep 2026",
+        color: "linear-gradient(135deg, #4facfe 0%, #00b4d8 100%)",
+        weekData: [
+            {
+                label: "Week 2B", dates: "27–31 Jul", examWeek: false,
+                assessments: [
+                    { subject: "English", category: "core",     type: "Class Test",     task: "TBC" },
+                    { subject: "Timber",  category: "elective", type: "Practical Task", task: "Mirror/picture frame project" }
+                ]
+            },
+            {
+                label: "Week 4B", dates: "10–14 Aug", examWeek: false,
+                assessments: [
+                    { subject: "Technology", category: "core", type: "Portfolio", task: "Project 2" }
+                ]
+            },
+            {
+                label: "Week 5A", dates: "17–21 Aug", examWeek: false,
+                assessments: [
+                    { subject: "PDHPE",       category: "core",     type: "Class Test",  task: "Racism and Discrimination Test" },
+                    { subject: "Mathematics", category: "core",     type: "Class Test",  task: "Written Task" },
+                    { subject: "Drama",       category: "elective", type: "Performance", task: "Creative Mask Performance" }
+                ]
+            },
+            {
+                label: "Week 6B", dates: "24–28 Aug", examWeek: false,
+                assessments: [
+                    { subject: "Hands-On History", category: "elective", type: "Submission", task: "ANZAC research assignment" },
+                    { subject: "Product Design",   category: "elective", type: "Project",    task: "Wallet project" }
+                ]
+            },
+            {
+                label: "Week 7A", dates: "31 Aug – 4 Sep", examWeek: false,
+                assessments: [
+                    { subject: "Business",                 category: "elective", type: "Class Test",        task: "Law School – Short Answer Exam" },
+                    { subject: "Phil & Religious Studies", category: "core",     type: "Extended Response", task: "Argument about existence of God" },
+                    { subject: "Philosophy",               category: "core",     type: "Oral Presentation", task: "PIP – philosophical film study" }
+                ]
+            },
+            {
+                label: "Week 8B", dates: "7–11 Sep", examWeek: false,
+                assessments: [
+                    { subject: "Science",     category: "core",     type: "Practical Task", task: "Practical Task" },
+                    { subject: "Game Design", category: "elective", type: "Research Task",  task: "Unity Training" },
+                    { subject: "Geography",   category: "core",     type: "Class Test",     task: "Interconnections – short answer & extended" }
+                ]
+            },
+            {
+                label: "Week 9A", dates: "14–18 Sep", examWeek: false,
+                assessments: [
+                    { subject: "Latin",         category: "elective", type: "Class Test",        task: "Written Test (Ch 1–14)" },
+                    { subject: "Food & Cooking", category: "elective", type: "Practical + Research", task: "Practical cooking task 2 + Research" },
+                    { subject: "Filmmaking",    category: "elective", type: "Practical Task",    task: "Fight Scene" }
+                ]
+            }
+        ]
+    },
+    {
+        id: 4, label: "Term 4", year: 2026,
+        weeks: "Weeks 12B – 16B", dates: "20 Oct – 13 Nov 2026",
+        color: "linear-gradient(135deg, #43e97b 0%, #1a9e5c 100%)",
+        weekData: [
+            {
+                label: "Week 12B", dates: "19–23 Oct", examWeek: false,
+                assessments: [
+                    { subject: "Product Design", category: "elective", type: "Project",        task: "Design project" },
+                    { subject: "PDHPE",          category: "core",     type: "Practical Task", task: "Physical Literacy Assessment 2" },
+                    { subject: "Visual Arts",    category: "core",     type: "Practical Task", task: "Printmaking Toolbox Task" },
+                    { subject: "English",        category: "core",     type: "Portfolio",      task: "Writing Journal Submission" }
+                ]
+            },
+            {
+                label: "Week 13A", dates: "26–30 Oct", examWeek: false,
+                assessments: [
+                    { subject: "Chinese",         category: "elective", type: "Class Test",            task: "Interacting in Chinese" },
+                    { subject: "French",          category: "elective", type: "Class Test",            task: "Speaking in French" },
+                    { subject: "Latin",           category: "elective", type: "Class Test",            task: "Mythology Unseen (Ch 1–17)" },
+                    { subject: "Technology",      category: "core",     type: "Portfolio",             task: "Project 3" },
+                    { subject: "Timber",          category: "elective", type: "Practical Task",        task: "Knife block project" },
+                    { subject: "Game Design",     category: "elective", type: "Project",               task: "Unity project" },
+                    { subject: "Business",        category: "elective", type: "Class Test",            task: "International Business & Tourism" },
+                    { subject: "Music",           category: "core",     type: "Performance / Practical", task: "Evidence Submission #2" },
+                    { subject: "Hands-On History", category: "elective", type: "Portfolio",            task: "Siege Weapon model & folio" }
+                ]
+            },
+            {
+                label: "Week 14B", dates: "2–6 Nov", examWeek: true,
+                assessments: [
+                    { subject: "Science",                  category: "core",     type: "Yearly Exam",       task: "Yearly Examination" },
+                    { subject: "Phil & Religious Studies", category: "core",     type: "Class Test",        task: "Quiz on 'Origin Stories'" },
+                    { subject: "Mathematics",              category: "core",     type: "Yearly Exam",       task: "Yearly Examination" },
+                    { subject: "Geography",                category: "core",     type: "Exam Style",        task: "Geography skills assessment" },
+                    { subject: "Drama",                    category: "elective", type: "Performance",       task: "Radio Plays Group Performance" },
+                    { subject: "English",                  category: "core",     type: "Extended Response", task: "Analytical essay on novel" },
+                    { subject: "Philosophy",               category: "core",     type: "Extended Response", task: "Written reflection on telos" },
+                    { subject: "Visual Arts",              category: "core",     type: "Exam Style",        task: "Written Toolbox task" }
+                ]
+            },
+            {
+                label: "Week 16B", dates: "9–13 Nov", examWeek: false,
+                assessments: [
+                    { subject: "Filmmaking", category: "elective", type: "Practical Task", task: "Animation or Meme" }
+                ]
+            }
+        ]
+    }
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DERIVED DATA
+// ─────────────────────────────────────────────────────────────────────────────
+const allElectives = [...new Set(
+    TERMS.flatMap(t => t.weekData.flatMap(w =>
+        w.assessments.filter(a => a.category === 'elective').map(a => a.subject)
+    ))
+)].sort();
+
+let selected = new Set(); // none selected by default
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PROFILE MANAGEMENT — up to 30 named profiles stored in localStorage.
+// The active profile for this browser tab is tracked in sessionStorage so
+// multiple tabs / browsers are fully independent of each other.
+// ─────────────────────────────────────────────────────────────────────────────
+const MAX_PROFILES  = 50;
+const EXPIRY_MS     = 24 * 60 * 60 * 1000; // 24 hours since last use
+const PROFILES_KEY  = 'y8_profiles_v1';
+const ACTIVE_ID_KEY = 'y8_activeProfileId';
+
+function getAllProfiles() {
+    try {
+        const all = JSON.parse(localStorage.getItem(PROFILES_KEY)) || [];
+        const now = Date.now();
+        const live = all.filter(p => now - (p.lastUsed || p.created || 0) < EXPIRY_MS);
+        if (live.length !== all.length) localStorage.setItem(PROFILES_KEY, JSON.stringify(live));
+        return live;
+    } catch { return []; }
+}
+function saveAllProfiles(profiles) {
+    localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
+}
+function getActiveProfileId() {
+    return sessionStorage.getItem(ACTIVE_ID_KEY);
+}
+function getActiveProfile() {
+    const id = getActiveProfileId();
+    return getAllProfiles().find(p => p.id === id) || null;
+}
+function createProfile(name) {
+    const profiles = getAllProfiles();
+    if (profiles.length >= MAX_PROFILES) return null;
+    const now = Date.now();
+    const p = {
+        id:       now + '_' + Math.random().toString(36).slice(2, 7),
+        name:     name.trim() || 'Student',
+        sel:      [],
+        created:  now,
+        lastUsed: now
+    };
+    profiles.push(p);
+    saveAllProfiles(profiles);
+    return p;
+}
+function deleteProfile(id) {
+    saveAllProfiles(getAllProfiles().filter(p => p.id !== id));
+}
+function saveProfile() {
+    const id = getActiveProfileId();
+    if (!id) return;
+    const profiles = getAllProfiles();
+    const i = profiles.findIndex(p => p.id === id);
+    if (i === -1) return;
+    profiles[i].name     = document.getElementById('studentName').value.trim() || profiles[i].name;
+    profiles[i].sel      = [...selected];
+    profiles[i].lastUsed = Date.now();
+    saveAllProfiles(profiles);
+}
+function loadProfile() {
+    const p = getActiveProfile();
+    if (!p) return;
+    selected = new Set(p.sel || []);
+    document.getElementById('studentName').value = p.name || '';
+    syncPrintName();
+}
+function syncPrintName() {
+    const name = document.getElementById('studentName').value.trim();
+    document.getElementById('printName').textContent = name ? 'Student: ' + name : '';
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PROFILE PICKER UI
+// ─────────────────────────────────────────────────────────────────────────────
+function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function openPicker() {
+    renderProfileGrid();
+    document.getElementById('newProfileForm').classList.remove('open');
+    document.getElementById('profileOverlay').classList.remove('hidden');
+}
+function closePicker() {
+    document.getElementById('profileOverlay').classList.add('hidden');
+}
+function renderProfileGrid() {
+    const profiles = getAllProfiles();
+    const grid     = document.getElementById('profileGrid');
+    const cap      = document.getElementById('modalCap');
+
+    cap.innerHTML = `<strong>${profiles.length}</strong> of <strong>${MAX_PROFILES}</strong> profiles used`;
+    grid.innerHTML = '';
+
+    profiles.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'profile-card';
+        const initial     = (p.name || '?')[0].toUpperCase();
+        const electCount  = (p.sel || []).length;
+        const isActive    = p.id === getActiveProfileId();
+        card.innerHTML = `
+            <button class="profile-del" title="Delete profile">✕</button>
+            <div class="profile-avatar" style="${isActive ? 'box-shadow:0 0 0 3px #667eea,0 0 0 5px white' : ''}">${esc(initial)}</div>
+            <div class="profile-name">${esc(p.name)}</div>
+            <div class="profile-meta">${electCount} elective${electCount !== 1 ? 's' : ''}${isActive ? ' · active' : ''}</div>
+        `;
+        card.addEventListener('click', e => {
+            if (e.target.closest('.profile-del')) return;
+            sessionStorage.setItem(ACTIVE_ID_KEY, p.id);
+            loadProfile();
+            renderChips();
+            renderSchedule();
+            closePicker();
+        });
+        card.querySelector('.profile-del').addEventListener('click', e => {
+            e.stopPropagation();
+            if (!confirm(`Delete "${p.name}"?`)) return;
+            deleteProfile(p.id);
+            if (getActiveProfileId() === p.id) sessionStorage.removeItem(ACTIVE_ID_KEY);
+            renderProfileGrid();
+            // If we just deleted the active profile, re-open picker cleanly
+            if (!getActiveProfile()) { selected = new Set(); renderChips(); renderSchedule(); }
+        });
+        grid.appendChild(card);
+    });
+
+    // New profile card (shown if under the limit)
+    if (profiles.length < MAX_PROFILES) {
+        const addCard = document.createElement('div');
+        addCard.className = 'profile-card add-card';
+        addCard.innerHTML = `<div class="add-icon">+</div><div class="add-label">New Profile</div>`;
+        addCard.addEventListener('click', () => {
+            document.getElementById('newProfileForm').classList.add('open');
+            document.getElementById('newProfileName').value = '';
+            document.getElementById('newProfileName').focus();
+        });
+        grid.appendChild(addCard);
+    }
+}
+
+// Create profile
+document.getElementById('btnCreateProfile').addEventListener('click', () => {
+    const name = document.getElementById('newProfileName').value.trim();
+    if (!name) { document.getElementById('newProfileName').focus(); return; }
+    const p = createProfile(name);
+    if (!p) return;
+    sessionStorage.setItem(ACTIVE_ID_KEY, p.id);
+    loadProfile();
+    renderChips();
+    renderSchedule();
+    closePicker();
+});
+document.getElementById('newProfileName').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btnCreateProfile').click();
+});
+document.getElementById('btnCancelCreate').addEventListener('click', () => {
+    document.getElementById('newProfileForm').classList.remove('open');
+});
+document.getElementById('btnSwitch').addEventListener('click', openPicker);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CHIP RENDERING
+// ─────────────────────────────────────────────────────────────────────────────
+function renderChips() {
+    const grid = document.getElementById('electivesGrid');
+    grid.innerHTML = '';
+    allElectives.forEach((name, i) => {
+        const on = selected.has(name);
+        const chip = document.createElement('div');
+        chip.className = 'elective-chip' + (on ? ' selected' : '');
+        chip.innerHTML = `<div class="chip-dot">${on ? '✓' : ''}</div>${name}`;
+        chip.dataset.idx = i;
+        chip.addEventListener('click', () => {
+            selected.has(name) ? selected.delete(name) : selected.add(name);
+            renderChips();
+            renderSchedule();
+            saveProfile();
+        });
+        grid.appendChild(chip);
+    });
+    document.getElementById('totCount').textContent = allElectives.length;
+    document.getElementById('selCount').textContent = selected.size;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────────────────────────────────────────
+function renderTabs() {
+    const tabsEl = document.getElementById('termTabs');
+    tabsEl.innerHTML = '';
+    TERMS.forEach(term => {
+        const btn = document.createElement('button');
+        btn.className = 'term-tab';
+        btn.textContent = term.label;
+        btn.style.cssText = `background:${term.color}; border-color:transparent; color:white;`;
+        btn.addEventListener('click', () => {
+            const el = document.getElementById('term-' + term.id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        tabsEl.appendChild(btn);
+    });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SCHEDULE RENDERING
+// ─────────────────────────────────────────────────────────────────────────────
+function renderSchedule() {
+    const scheduleEl = document.getElementById('schedule');
+    scheduleEl.innerHTML = '';
+    let totalCount = 0;
+
+    TERMS.forEach(term => {
+        // Build week HTML
+        let weeksHtml = '';
+        let termCount = 0;
+
+        term.weekData.forEach(week => {
+            const visible = week.assessments.filter(a =>
+                a.category === 'core' || selected.has(a.subject)
+            );
+            if (!visible.length) return;
+            termCount += visible.length;
+            totalCount += visible.length;
+
+            const cardsHtml = visible.map(a => `
+                <div class="assessment-card ${a.category}${week.examWeek ? ' exam' : ''}">
+                    <div class="card-top">
+                        <div class="card-subject">${a.subject}</div>
+                        <span class="card-badge ${a.category}">${a.category === 'core' ? 'Core' : 'Elective'}</span>
+                    </div>
+                    <div class="card-type">${a.type}</div>
+                    <div class="card-task">${a.task}</div>
+                </div>
+            `).join('');
+
+            if (week.examWeek) {
+                weeksHtml += `
+                    <div class="week-section">
+                        <div class="exam-banner">★ ASSESSMENT WEEK — ${week.label} &nbsp;(${week.dates})</div>
+                        <div class="cards-grid">${cardsHtml}</div>
+                    </div>`;
+            } else {
+                weeksHtml += `
+                    <div class="week-section">
+                        <div class="week-header">
+                            <span class="week-label">${week.label}</span>
+                            <span class="week-dates">${week.dates}</span>
+                            <div class="week-line"></div>
+                        </div>
+                        <div class="cards-grid">${cardsHtml}</div>
+                    </div>`;
+            }
+        });
+
+        const bodyHtml = weeksHtml || `<div class="empty-term">No assessments for your selected subjects this term.</div>`;
+
+        const section = document.createElement('div');
+        section.className = 'term-section';
+        section.id = 'term-' + term.id;
+        section.innerHTML = `
+            <div class="term-header" style="background:${term.color}">
+                <div class="term-header-left">
+                    <h2>${term.label}, ${term.year}</h2>
+                    <span>${term.dates}</span>
+                </div>
+                <div class="term-header-right">
+                    <div class="t-weeks">${term.weeks}</div>
+                    <div class="term-count-badge">${termCount} assessment${termCount !== 1 ? 's' : ''}</div>
+                </div>
+            </div>
+            <div class="term-body">${bodyHtml}</div>
+        `;
+        scheduleEl.appendChild(section);
+    });
+
+    document.getElementById('totalCount').textContent = totalCount;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────────────────────
+document.getElementById('btnAll').addEventListener('click', () => {
+    selected = new Set(allElectives); renderChips(); renderSchedule(); saveProfile();
+});
+document.getElementById('btnNone').addEventListener('click', () => {
+    selected = new Set(); renderChips(); renderSchedule(); saveProfile();
+});
+document.getElementById('studentName').addEventListener('input', () => {
+    syncPrintName();
+    saveProfile();
+});
+
+// Show picker if no active profile exists for this tab, otherwise load saved data
+if (!getActiveProfile()) {
+    openPicker();
+} else {
+    loadProfile();
+}
+renderChips();
+renderTabs();
+renderSchedule();
+</script>
+</body>
+</html>
